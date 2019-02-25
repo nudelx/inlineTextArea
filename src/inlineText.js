@@ -27,12 +27,13 @@ export default class InlineText extends React.Component {
   handleOnChange = e => {
     const txt = e.nativeEvent.target.value
 
-    console.log('scrollHeight', this.refs.textarea.scrollTop)
+    console.log('scrollTop', this.refs.textarea.scrollTop)
     console.log('state', this.state.areaScroll)
     this.setState(state => ({
       txt,
       areaScroll:
-        state.areaScroll < this.refs.textarea.scrollTop
+        state.areaScroll < this.refs.textarea.scrollTop ||
+        state.totalHeight < this.refs.textarea.clientHeight
           ? this.refs.textarea.scrollTop
           : state.areaScroll,
       totalHeight: parseInt(
@@ -65,7 +66,7 @@ export default class InlineText extends React.Component {
         }}
         ref={'textarea'}
         placeholder={placeholder}
-        onBlur={this.toggleState}
+        // onBlur={this.toggleState}
         value={this.state.txt || ''}
         className={`inline-text ${this.state.edit ? 'editmode' : ''}`}
         onChange={this.handleOnChange}
